@@ -5,6 +5,27 @@ VisualStudioVersion = 17.10.35027.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApp", "WindowsFormsApp\WindowsFormsApp.csproj", "{15DC4267-D05D-41DE-B115-F00CACE6B78B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dominio", "dominio", "{C1BA40E3-F55F-431A-844D-98A265B5FEBA}"
+	ProjectSection(SolutionItems) = preProject
+		dominio\Articulo.cs = dominio\Articulo.cs
+		dominio\Categoria.cs = dominio\Categoria.cs
+		dominio\dominio.csproj = dominio\dominio.csproj
+		dominio\Imagen.cs = dominio\Imagen.cs
+		dominio\Marca.cs = dominio\Marca.cs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "negocio", "negocio", "{6A058D10-CB90-4039-8DB6-4E822C5D1824}"
+	ProjectSection(SolutionItems) = preProject
+		negocio\AccesoDatos.cs = negocio\AccesoDatos.cs
+		negocio\ArticuloNegocio.cs = negocio\ArticuloNegocio.cs
+		negocio\negocio.csproj = negocio\negocio.csproj
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scriptdb", "scriptdb", "{2D3BB0B9-232A-485F-B0B3-F86FF26E1D9A}"
+	ProjectSection(SolutionItems) = preProject
+		negocio\script_db\POKEDEX_DB.sql = negocio\script_db\POKEDEX_DB.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,6 +39,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2D3BB0B9-232A-485F-B0B3-F86FF26E1D9A} = {6A058D10-CB90-4039-8DB6-4E822C5D1824}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E3DD4A6B-4DE6-47F8-9285-7A2398F1F662}
