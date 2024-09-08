@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using dominio;
+using negocio;
 
 namespace WindowsFormsApp
 
@@ -17,14 +18,18 @@ namespace WindowsFormsApp
         public Form1()
         {
             InitializeComponent();
-            Articulo articulo = new Articulo();
-            
-            
+            Articulo articulo = new Articulo();    
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
            
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            ArticuloNegocio negocio = new ArticuloNegocio();
+            dgvArticulos.DataSource = negocio.listar();
         }
     }
 }

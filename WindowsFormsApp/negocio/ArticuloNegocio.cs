@@ -16,7 +16,7 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.setearConsulta("select a.id,codigo,nombre,a.descripcion,a.idmarca,m.descripcion as marca,a.idcategoria,c.descripcion categoria from articulos a, categorias c, marcas m where a.idmarca = m.id and a.idcategoria = c.id");
+                datos.setearConsulta("select a.id,codigo,nombre,a.descripcion,a.precio,a.idmarca,m.descripcion as marca,a.idcategoria,c.descripcion categoria from articulos a, categorias c, marcas m where a.idmarca = m.id and a.idcategoria = c.id");
                 datos.ejecutarLectura();
             
 
@@ -37,7 +37,7 @@ namespace negocio
                     art.Categoria .Id = (int)datos.Lector["idcategoria"];
                     art.Categoria.Descripcion = (string)datos.Lector["categoria"];
 
-                    art.Precio = (Decimal)datos.Lector["precio"];
+                   art.Precio = (Decimal)datos.Lector["precio"];
 
                     listArt.Add(art);
                 }
