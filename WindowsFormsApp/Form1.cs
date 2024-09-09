@@ -15,6 +15,8 @@ namespace WindowsFormsApp
 {
     public partial class Form1 : Form
     {
+
+        private List<Articulo> listaImagenes;
         public Form1()
         {
             InitializeComponent();
@@ -29,7 +31,32 @@ namespace WindowsFormsApp
         private void Form1_Load(object sender, EventArgs e)
         {
             ArticuloNegocio negocio = new ArticuloNegocio();
-            dgvArticulos.DataSource = negocio.listar();
+            listaImagenes = negocio.listar();
+            dgvArticulos.DataSource = listaImagenes;
+            cargarImagen(listaImagenes[0].UrlImagen);
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dgvArticulos_SelectionChanged(object sender, EventArgs e)
+        {
+            Articulo seleccionado = (Articulo)dgvArticulos.CurrentRow.DataBoundItem;
+            cargarImagen(seleccionado.UrlImagen);
+        }
+        private void cargarImagen(string imagen)
+        {
+            try
+            {
+                pbxArticulos.Load(imagen);
+            }
+            catch (Exception ex)
+            {
+
+                pbxArticulos.Load("https://imgs.search.brave.com/fVrzTsY8XbfClD6SD9ps0BmYFUEi7I2qsepvPy4Ypj4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzA3LzU2LzY3LzM0/LzM2MF9GXzc1NjY3/MzQ2Nl9RclpHNU45/bDM4TGw4cE1NQW5J/NzgwWWxQcVROMm5h/aC5qcGc");
+            }
         }
     }
 }

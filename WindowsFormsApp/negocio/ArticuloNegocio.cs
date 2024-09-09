@@ -16,7 +16,9 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.setearConsulta("select a.id,codigo,nombre,a.descripcion,a.precio,a.idmarca,m.descripcion as marca,a.idcategoria,c.descripcion categoria from articulos a, categorias c, marcas m where a.idmarca = m.id and a.idcategoria = c.id");
+                datos.setearConsulta("SELECT a.id,a.codigo,a.nombre,a.descripcion,a.precio,i.IdArticulo,i.ImagenUrl,a.idmarca,m.descripcion" +
+                    " AS marca,a.idcategoria,c.descripcion AS categoria FROM articulos a " +
+                    "INNER JOIN categorias c ON a.idcategoria = c.id INNER JOIN marcas m ON a.idmarca = m.id LEFT JOIN imagenes i ON a.id = i.IdArticulo;");
                 datos.ejecutarLectura();
             
 
@@ -34,10 +36,14 @@ namespace negocio
                     art.Marca.Descripcion = (string)datos.Lector["marca"];
 
                     art.Categoria = new Categoria();
-                    art.Categoria .Id = (int)datos.Lector["idcategoria"];
+                    art.Categoria.Id = (int)datos.Lector["idcategoria"];
                     art.Categoria.Descripcion = (string)datos.Lector["categoria"];
 
-                   art.Precio = (Decimal)datos.Lector["precio"];
+                    art.Precio = (Decimal)datos.Lector["precio"];
+
+                    art.Imagenes = new Imagen();
+                    art.Imagenes.Id = (int)datos.Lector["IdArticulo"];
+                    art.Imagenes.ImagenUrl = (string)datos.Lector["ImagenUrl"];
 
                     listArt.Add(art);
                 }
