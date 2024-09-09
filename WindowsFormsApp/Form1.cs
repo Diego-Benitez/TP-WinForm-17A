@@ -33,7 +33,8 @@ namespace WindowsFormsApp
             ArticuloNegocio negocio = new ArticuloNegocio();
             listaImagenes = negocio.listar();
             dgvArticulos.DataSource = listaImagenes;
-            cargarImagen(listaImagenes[0].UrlImagen);
+            dgvArticulos.Columns["Imagenes"].Visible = false;
+            cargarImagen(listaImagenes[0].Imagenes.ImagenUrl);
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
@@ -44,7 +45,7 @@ namespace WindowsFormsApp
         private void dgvArticulos_SelectionChanged(object sender, EventArgs e)
         {
             Articulo seleccionado = (Articulo)dgvArticulos.CurrentRow.DataBoundItem;
-            cargarImagen(seleccionado.UrlImagen);
+            cargarImagen(seleccionado.Imagenes.ImagenUrl);
         }
         private void cargarImagen(string imagen)
         {

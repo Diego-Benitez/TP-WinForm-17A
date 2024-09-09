@@ -42,7 +42,6 @@ namespace negocio
                     art.Precio = (Decimal)datos.Lector["precio"];
 
                     art.Imagenes = new Imagen();
-                    art.Imagenes.Id = (int)datos.Lector["IdArticulo"];
                     art.Imagenes.ImagenUrl = (string)datos.Lector["ImagenUrl"];
 
                     listArt.Add(art);

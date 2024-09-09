@@ -19,10 +19,6 @@ namespace dominio
         public Categoria Categoria { get; set; }
         public Decimal Precio { get; set; }
         public Imagen Imagenes { get; set; }
-        public string UrlImagen
-        {
-            get { return Imagenes != null ? Imagenes.ImagenUrl : null; }
-        }
 
 
     }
