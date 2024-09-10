@@ -16,9 +16,7 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.setearConsulta("SELECT a.id,a.codigo,a.nombre,a.descripcion,a.precio,i.IdArticulo,i.ImagenUrl,a.idmarca,m.descripcion" +
-                    " AS marca,a.idcategoria,c.descripcion AS categoria FROM articulos a " +
-                    "INNER JOIN categorias c ON a.idcategoria = c.id INNER JOIN marcas m ON a.idmarca = m.id LEFT JOIN imagenes i ON a.id = i.IdArticulo;");
+                datos.setearConsulta("SELECT Codigo, Nombre, m.Descripcion Marca, C.Descripcion Categoria, Precio, A.Descripcion, I.ImagenUrl  from ARTICULOS A, MARCAS M, CATEGORIAS C, IMAGENES I where A.idmarca = M.id and A.idcategoria = c.id and a.Id = i.IdArticulo");
                 datos.ejecutarLectura();
             
 
@@ -26,17 +24,17 @@ namespace negocio
                 {
                     Articulo art = new Articulo();
 
-                    art.Id = (int)datos.Lector["id"];
+                    //art.Id = (int)datos.Lector["id"];
                     art.Codigo = (string)datos.Lector["codigo"];
                     art.Nombre = (string)datos.Lector["nombre"];
                     art.Descripcion = (string)datos.Lector["descripcion"];
 
                     art.Marca = new Marca();
-                    art.Marca.Id = (int)datos.Lector["idmarca"];
+                   // art.Marca.Id = (int)datos.Lector["idmarca"];
                     art.Marca.Descripcion = (string)datos.Lector["marca"];
 
                     art.Categoria = new Categoria();
-                    art.Categoria.Id = (int)datos.Lector["idcategoria"];
+                    //art.Categoria.Id = (int)datos.Lector["idcategoria"];
                     art.Categoria.Descripcion = (string)datos.Lector["categoria"];
 
                     art.Precio = (Decimal)datos.Lector["precio"];
@@ -53,6 +51,25 @@ namespace negocio
             {
 
                 throw ex;
+            }
+        }
+        public void agregar(Articulo nuevo)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("insert into ARTICULOS (Codigo, Nombre,Descripcion)VALUES(" + nuevo.Codigo + ",'" + nuevo.Nombre + "','" + nuevo.Descripcion + "')");
+                datos.ejecutarAccion();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
             }
         }
 
