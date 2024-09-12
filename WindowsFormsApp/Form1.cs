@@ -16,7 +16,7 @@ namespace WindowsFormsApp
     public partial class Form1 : Form
     {
 
-        private List<Articulo> listaImagenes;
+        private List<Articulo> listaArticulos;
         public Form1()
         {
             InitializeComponent();
@@ -26,17 +26,28 @@ namespace WindowsFormsApp
         private void Form1_Load(object sender, EventArgs e)
         {
             ArticuloNegocio negocio = new ArticuloNegocio();
-            listaImagenes = negocio.listar();
-            dgvArticulos.DataSource = listaImagenes;
-            dgvArticulos.Columns["Imagenes"].Visible = false;
-            dgvArticulos.Columns["Id"].Visible = false;
-            cargarImagen(listaImagenes[0].Imagenes.ImagenUrl);
+            listaArticulos = negocio.listar();
+            dgvArticulos.DataSource = listaArticulos;
+            ocultarColumnas();
+            cargarImagen(listaArticulos[0].Imagenes.ImagenUrl);
         }
 
         private void dgvArticulos_SelectionChanged(object sender, EventArgs e)
         {
-            Articulo seleccionado = (Articulo)dgvArticulos.CurrentRow.DataBoundItem;
-            cargarImagen(seleccionado.Imagenes.ImagenUrl);
+            try
+            {
+                if(dgvArticulos.CurrentRow != null)
+                {
+                    Articulo seleccionado = (Articulo)dgvArticulos.CurrentRow.DataBoundItem;
+                    cargarImagen(seleccionado.Imagenes.ImagenUrl);
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
         private void cargarImagen(string imagen)
         {
@@ -56,6 +67,30 @@ namespace WindowsFormsApp
             alta.ShowDialog();
         }
 
-    
+        private void txtFiltro_TextChanged(object sender, EventArgs e)
+        {
+            List<Articulo> listaFiltrada;
+
+            string filtro = txtFiltro.Text;
+
+            if(filtro.Length >= 3)
+            {
+                listaFiltrada = listaArticulos.FindAll(x => x.Nombre.ToUpper().Contains(filtro.ToUpper()) || x.Marca.Descripcion.ToUpper().Contains(filtro.ToUpper()) || x.Categoria.Descripcion.ToUpper().Contains(filtro.ToUpper()));
+            }
+            else
+            {
+                listaFiltrada = listaArticulos;
+            }
+
+            dgvArticulos.DataSource = null;
+            dgvArticulos.DataSource = listaFiltrada;
+            ocultarColumnas();
+
+        }
+        private void ocultarColumnas()
+        {
+            dgvArticulos.Columns["Imagenes"].Visible = false;
+            dgvArticulos.Columns["Id"].Visible = false;
+        }
     }
 }
