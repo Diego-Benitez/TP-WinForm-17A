@@ -55,5 +55,7 @@ namespace WindowsFormsApp
             frmAltaArticulo alta = new frmAltaArticulo();   
             alta.ShowDialog();
         }
+
+    
     }
 }

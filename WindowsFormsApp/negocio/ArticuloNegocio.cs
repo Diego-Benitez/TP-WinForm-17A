@@ -58,7 +58,7 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.setearConsulta("insert into ARTICULOS (Codigo, Nombre,Descripcion)VALUES(" + nuevo.Codigo + ",'" + nuevo.Nombre + "','" + nuevo.Descripcion + "')");
+                datos.setearConsulta("insert into ARTICULOS (Codigo, Nombre,Descripcion)VALUES('" + nuevo.Codigo + "','" + nuevo.Nombre + "','" + nuevo.Descripcion + "')");
                 datos.ejecutarAccion();
 
             }
