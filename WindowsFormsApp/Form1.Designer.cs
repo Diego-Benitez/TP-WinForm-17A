@@ -35,6 +35,8 @@
             this.btnEliminar = new System.Windows.Forms.Button();
             this.lblFiltro = new System.Windows.Forms.Label();
             this.txtFiltro = new System.Windows.Forms.TextBox();
+            this.txtAtras = new System.Windows.Forms.Button();
+            this.txtSiguiente = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvArticulos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxArticulos)).BeginInit();
             this.SuspendLayout();
@@ -107,11 +109,35 @@
             this.txtFiltro.TabIndex = 6;
             this.txtFiltro.TextChanged += new System.EventHandler(this.txtFiltro_TextChanged);
             // 
+            // txtAtras
+            // 
+            this.txtAtras.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.txtAtras.Location = new System.Drawing.Point(745, 364);
+            this.txtAtras.Name = "txtAtras";
+            this.txtAtras.Size = new System.Drawing.Size(28, 23);
+            this.txtAtras.TabIndex = 7;
+            this.txtAtras.Text = "<";
+            this.txtAtras.UseVisualStyleBackColor = false;
+            this.txtAtras.Click += new System.EventHandler(this.txtAtras_Click);
+            // 
+            // txtSiguiente
+            // 
+            this.txtSiguiente.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.txtSiguiente.Location = new System.Drawing.Point(954, 364);
+            this.txtSiguiente.Name = "txtSiguiente";
+            this.txtSiguiente.Size = new System.Drawing.Size(28, 23);
+            this.txtSiguiente.TabIndex = 8;
+            this.txtSiguiente.Text = ">";
+            this.txtSiguiente.UseVisualStyleBackColor = false;
+            this.txtSiguiente.Click += new System.EventHandler(this.txtSiguiente_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1082, 502);
+            this.Controls.Add(this.txtSiguiente);
+            this.Controls.Add(this.txtAtras);
             this.Controls.Add(this.txtFiltro);
             this.Controls.Add(this.lblFiltro);
             this.Controls.Add(this.btnEliminar);
@@ -138,6 +164,8 @@
         private System.Windows.Forms.Button btnEliminar;
         private System.Windows.Forms.Label lblFiltro;
         private System.Windows.Forms.TextBox txtFiltro;
+        private System.Windows.Forms.Button txtAtras;
+        private System.Windows.Forms.Button txtSiguiente;
     }
 }
 

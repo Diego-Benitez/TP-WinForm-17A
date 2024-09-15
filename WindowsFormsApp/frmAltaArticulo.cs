@@ -42,7 +42,7 @@ namespace WindowsFormsApp
             {
                 if(articulo == null)
                     articulo = new Articulo();
-                articulo.Imagenes = new Imagen();
+                //articulo.Imagenes = new Imagen();
 
                 articulo.Codigo = txtCodigo.Text;
                 articulo.Nombre = txtNombre.Text;
@@ -106,8 +106,8 @@ namespace WindowsFormsApp
                     txtNombre.Text = articulo.Nombre;
                     txtDescripcion.Text = articulo.Descripcion;
                     txtPrecio.Text = articulo.Precio.ToString();
-                    txtImg.Text = articulo.Imagenes.ImagenUrl;
-                    cargarImagen(articulo.Imagenes.ImagenUrl);
+                    //txtImg.Text = articulo.Imagenes.ImagenUrl;
+                    //cargarImagen(articulo.Imagenes.ImagenUrl);
                     comboBoxCategoria.SelectedValue = articulo.Categoria.Id;
                     comboBoxMarca.SelectedValue = articulo.Marca.Id;
                 }

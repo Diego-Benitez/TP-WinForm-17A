@@ -17,11 +17,10 @@ namespace negocio
             try
             {
 
-                datos.setearConsulta("Select A.Id IdArticulo , A.Codigo, A.Nombre, M.Descripcion Marca,M.id IdMarca, C.Descripcion Categoria, C.Id IdCategoria, A.Precio, A.Descripcion, I.ImagenUrl  " +
+                datos.setearConsulta("Select A.Id IdArticulo , A.Codigo, A.Nombre, M.Descripcion Marca,M.id IdMarca, C.Descripcion Categoria, C.Id IdCategoria, A.Precio, A.Descripcion " +
                     "from ARTICULOS A " +
                     "INNER JOIN MARCAS M ON A.IdMarca = M.Id " +
-                    "INNER JOIN CATEGORIAS C ON A.IdCategoria = C.Id LEFT " +
-                    "JOIN IMAGENES I ON A.Id = I.IdArticulo");
+                    "INNER JOIN CATEGORIAS C ON A.IdCategoria = C.Id ");
                 //datos.setearConsulta("SELECT Codigo, Nombre, m.Descripcion Marca, C.Descripcion Categoria, Precio, A.Descripcion, I.ImagenUrl  from ARTICULOS A, MARCAS M, CATEGORIAS C, IMAGENES I where A.idmarca = M.id and A.idcategoria = c.id and a.Id = i.IdArticulo");
                 datos.ejecutarLectura();
             
@@ -45,14 +44,42 @@ namespace negocio
 
                     art.Precio = (Decimal)datos.Lector["Precio"];
 
-                    art.Imagenes = new Imagen();
-                    if (!(datos.Lector["ImagenUrl"] is DBNull))
-                        art.Imagenes.ImagenUrl = (string)datos.Lector["ImagenUrl"];
+                    //art.Imagenes = new Imagen();
+                    //if (!(datos.Lector["ImagenUrl"] is DBNull))
+                    //    art.Imagenes.ImagenUrl = (string)datos.Lector["ImagenUrl"];
 
                     listArt.Add(art);
                 }
 
                 return listArt;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+        public List<Imagen> listarImagen()
+        {
+            AccesoDatos datos = new AccesoDatos();
+            List<Imagen> listaImg = new List<Imagen>();
+            try
+            {
+                datos.setearConsulta("select Id,IdArticulo,ImagenUrl from Imagenes");
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Imagen img = new Imagen();
+
+                    img.Id = (int)datos.Lector["Id"];
+                    img.IdArticulo = (int)datos.Lector["IdArticulo"];
+                    img.ImagenUrl = (string)datos.Lector["ImagenUrl"];
+
+                    listaImg.Add(img);
+                }
+
+                return listaImg;
             }
             catch (Exception ex)
             {
