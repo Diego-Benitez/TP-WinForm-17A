@@ -334,6 +334,9 @@ namespace WindowsFormsApp
             }
         }
 
-        
+        private void btnAgregarImg_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

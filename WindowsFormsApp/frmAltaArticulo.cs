@@ -119,5 +119,10 @@ namespace WindowsFormsApp
             }
 
         }
+
+        private void lblCodigo_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

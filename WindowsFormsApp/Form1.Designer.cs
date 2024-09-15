@@ -209,6 +209,7 @@
             this.btnAgregarImg.TabIndex = 2;
             this.btnAgregarImg.Text = "Agregar";
             this.btnAgregarImg.UseVisualStyleBackColor = true;
+            this.btnAgregarImg.Click += new System.EventHandler(this.btnAgregarImg_Click);
             // 
             // frmArticulos
             // 
