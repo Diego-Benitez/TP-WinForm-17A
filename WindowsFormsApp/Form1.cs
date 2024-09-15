@@ -13,13 +13,13 @@ using negocio;
 namespace WindowsFormsApp
 
 {
-    public partial class Form1 : Form
+    public partial class frmArticulos : Form
     {
 
         private List<Articulo> listaArticulos;
         private List<Imagen> listaImagen;
 
-        public Form1()
+        public frmArticulos()
         {
             InitializeComponent();
             Articulo articulo = new Articulo();    
@@ -333,5 +333,7 @@ namespace WindowsFormsApp
                 MessageBox.Show("Ocurrió un error al cargar imagen siguiente...");
             }
         }
+
+        
     }
 }
