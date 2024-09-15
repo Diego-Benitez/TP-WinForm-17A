@@ -64,6 +64,8 @@
     </Compile>
     <Compile Include="negocio\AccesoDatos.cs" />
     <Compile Include="negocio\ArticuloNegocio.cs" />
+    <Compile Include="negocio\CategoriaNegocio.cs" />
+    <Compile Include="negocio\MarcaNegocio.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">

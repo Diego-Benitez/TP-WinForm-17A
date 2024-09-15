@@ -16,7 +16,13 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.setearConsulta("SELECT Codigo, Nombre, m.Descripcion Marca, C.Descripcion Categoria, Precio, A.Descripcion, I.ImagenUrl  from ARTICULOS A, MARCAS M, CATEGORIAS C, IMAGENES I where A.idmarca = M.id and A.idcategoria = c.id and a.Id = i.IdArticulo");
+
+                datos.setearConsulta("Select A.Id IdArticulo , A.Codigo, A.Nombre, M.Descripcion Marca,M.id IdMarca, C.Descripcion Categoria, C.Id IdCategoria, A.Precio, A.Descripcion, I.ImagenUrl  " +
+                    "from ARTICULOS A " +
+                    "INNER JOIN MARCAS M ON A.IdMarca = M.Id " +
+                    "INNER JOIN CATEGORIAS C ON A.IdCategoria = C.Id LEFT " +
+                    "JOIN IMAGENES I ON A.Id = I.IdArticulo");
+                //datos.setearConsulta("SELECT Codigo, Nombre, m.Descripcion Marca, C.Descripcion Categoria, Precio, A.Descripcion, I.ImagenUrl  from ARTICULOS A, MARCAS M, CATEGORIAS C, IMAGENES I where A.idmarca = M.id and A.idcategoria = c.id and a.Id = i.IdArticulo");
                 datos.ejecutarLectura();
             
 
@@ -24,23 +30,24 @@ namespace negocio
                 {
                     Articulo art = new Articulo();
 
-                    //art.Id = (int)datos.Lector["id"];
-                    art.Codigo = (string)datos.Lector["codigo"];
-                    art.Nombre = (string)datos.Lector["nombre"];
+                    art.Id = (int)datos.Lector["IdArticulo"];
+                    art.Codigo = (string)datos.Lector["Codigo"];
+                    art.Nombre = (string)datos.Lector["Nombre"];
                     art.Descripcion = (string)datos.Lector["descripcion"];
 
                     art.Marca = new Marca();
-                   // art.Marca.Id = (int)datos.Lector["idmarca"];
+                    art.Marca.Id = (int)datos.Lector["IdMarca"];
                     art.Marca.Descripcion = (string)datos.Lector["marca"];
 
                     art.Categoria = new Categoria();
-                    //art.Categoria.Id = (int)datos.Lector["idcategoria"];
-                    art.Categoria.Descripcion = (string)datos.Lector["categoria"];
+                    art.Categoria.Id = (int)datos.Lector["IdCategoria"];
+                    art.Categoria.Descripcion = (string)datos.Lector["Categoria"];
 
-                    art.Precio = (Decimal)datos.Lector["precio"];
+                    art.Precio = (Decimal)datos.Lector["Precio"];
 
                     art.Imagenes = new Imagen();
-                    art.Imagenes.ImagenUrl = (string)datos.Lector["ImagenUrl"];
+                    if (!(datos.Lector["ImagenUrl"] is DBNull))
+                        art.Imagenes.ImagenUrl = (string)datos.Lector["ImagenUrl"];
 
                     listArt.Add(art);
                 }
@@ -56,9 +63,17 @@ namespace negocio
         public void agregar(Articulo nuevo)
         {
             AccesoDatos datos = new AccesoDatos();
+            Imagen imagen = new Imagen();
             try
             {
-                datos.setearConsulta("insert into ARTICULOS (Codigo, Nombre,Descripcion)VALUES('" + nuevo.Codigo + "','" + nuevo.Nombre + "','" + nuevo.Descripcion + "')");
+                //  datos.setearConsulta("insert into ARTICULOS (Codigo, Nombre,Descripcion,Precio,IdMarca,IdCategoria)VALUES(@Codigo, @Nombre, @Descripcion,@Precio, @IdMarca, @IdCategoria)");
+                datos.setearConsulta("insert into ARTICULOS(Codigo, Nombre, Descripcion, Precio, IdMarca, IdCategoria)VALUES('"+ nuevo.Codigo + "','" + nuevo.Nombre + "','" + nuevo.Descripcion + "'," + nuevo.Precio +", "+ nuevo.Marca.Id +"," + nuevo.Categoria.Id+")");
+                datos.setearParametro("@Codigo", nuevo.Codigo);
+                datos.setearParametro("@Nombre", nuevo.Nombre);
+                datos.setearParametro("@Descripcion", nuevo.Descripcion);
+                datos.setearParametro("@Precio", nuevo.Precio);
+                datos.setearParametro("@IdMarca", nuevo.Marca.Id);
+                datos.setearParametro("@IdCategoria", nuevo.Categoria.Id);
                 datos.ejecutarAccion();
 
             }

@@ -25,6 +25,10 @@ namespace WindowsFormsApp
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            cargarArticulos();
+        }
+        private void cargarArticulos()
+        {
             ArticuloNegocio negocio = new ArticuloNegocio();
             listaArticulos = negocio.listar();
             dgvArticulos.DataSource = listaArticulos;
@@ -65,7 +69,9 @@ namespace WindowsFormsApp
         {
             frmAltaArticulo alta = new frmAltaArticulo();   
             alta.ShowDialog();
+            cargarArticulos();
         }
+        
 
         private void txtFiltro_TextChanged(object sender, EventArgs e)
         {
@@ -91,6 +97,16 @@ namespace WindowsFormsApp
         {
             dgvArticulos.Columns["Imagenes"].Visible = false;
             dgvArticulos.Columns["Id"].Visible = false;
+        }
+
+        private void btnModificar_Click(object sender, EventArgs e)
+        {
+            Articulo seleccionado;
+            seleccionado = (Articulo)dgvArticulos.CurrentRow.DataBoundItem;
+
+            frmAltaArticulo modificar = new frmAltaArticulo(seleccionado);
+            modificar.ShowDialog();
+            cargarArticulos();
         }
     }
 }
