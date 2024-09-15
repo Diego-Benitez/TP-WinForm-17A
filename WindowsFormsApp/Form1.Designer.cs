@@ -35,8 +35,8 @@
             this.btnEliminar = new System.Windows.Forms.Button();
             this.lblFiltro = new System.Windows.Forms.Label();
             this.txtFiltro = new System.Windows.Forms.TextBox();
-            this.txtAtras = new System.Windows.Forms.Button();
-            this.txtSiguiente = new System.Windows.Forms.Button();
+            this.btnAtras = new System.Windows.Forms.Button();
+            this.btnSiguiente = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvArticulos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxArticulos)).BeginInit();
             this.SuspendLayout();
@@ -91,6 +91,7 @@
             this.btnEliminar.TabIndex = 4;
             this.btnEliminar.Text = "Eliminar";
             this.btnEliminar.UseVisualStyleBackColor = true;
+            this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
             // 
             // lblFiltro
             // 
@@ -109,35 +110,35 @@
             this.txtFiltro.TabIndex = 6;
             this.txtFiltro.TextChanged += new System.EventHandler(this.txtFiltro_TextChanged);
             // 
-            // txtAtras
+            // btnAtras
             // 
-            this.txtAtras.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.txtAtras.Location = new System.Drawing.Point(745, 364);
-            this.txtAtras.Name = "txtAtras";
-            this.txtAtras.Size = new System.Drawing.Size(28, 23);
-            this.txtAtras.TabIndex = 7;
-            this.txtAtras.Text = "<";
-            this.txtAtras.UseVisualStyleBackColor = false;
-            this.txtAtras.Click += new System.EventHandler(this.txtAtras_Click);
+            this.btnAtras.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.btnAtras.Location = new System.Drawing.Point(745, 364);
+            this.btnAtras.Name = "btnAtras";
+            this.btnAtras.Size = new System.Drawing.Size(28, 23);
+            this.btnAtras.TabIndex = 7;
+            this.btnAtras.Text = "<";
+            this.btnAtras.UseVisualStyleBackColor = false;
+            this.btnAtras.Click += new System.EventHandler(this.btnAtras_Click);
             // 
-            // txtSiguiente
+            // btnSiguiente
             // 
-            this.txtSiguiente.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.txtSiguiente.Location = new System.Drawing.Point(954, 364);
-            this.txtSiguiente.Name = "txtSiguiente";
-            this.txtSiguiente.Size = new System.Drawing.Size(28, 23);
-            this.txtSiguiente.TabIndex = 8;
-            this.txtSiguiente.Text = ">";
-            this.txtSiguiente.UseVisualStyleBackColor = false;
-            this.txtSiguiente.Click += new System.EventHandler(this.txtSiguiente_Click);
+            this.btnSiguiente.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.btnSiguiente.Location = new System.Drawing.Point(954, 364);
+            this.btnSiguiente.Name = "btnSiguiente";
+            this.btnSiguiente.Size = new System.Drawing.Size(28, 23);
+            this.btnSiguiente.TabIndex = 8;
+            this.btnSiguiente.Text = ">";
+            this.btnSiguiente.UseVisualStyleBackColor = false;
+            this.btnSiguiente.Click += new System.EventHandler(this.btnSiguiente_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1082, 502);
-            this.Controls.Add(this.txtSiguiente);
-            this.Controls.Add(this.txtAtras);
+            this.Controls.Add(this.btnSiguiente);
+            this.Controls.Add(this.btnAtras);
             this.Controls.Add(this.txtFiltro);
             this.Controls.Add(this.lblFiltro);
             this.Controls.Add(this.btnEliminar);
@@ -164,8 +165,8 @@
         private System.Windows.Forms.Button btnEliminar;
         private System.Windows.Forms.Label lblFiltro;
         private System.Windows.Forms.TextBox txtFiltro;
-        private System.Windows.Forms.Button txtAtras;
-        private System.Windows.Forms.Button txtSiguiente;
+        private System.Windows.Forms.Button btnAtras;
+        private System.Windows.Forms.Button btnSiguiente;
     }
 }
 

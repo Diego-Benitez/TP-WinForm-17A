@@ -32,15 +32,19 @@ namespace WindowsFormsApp
         private void cargarArticulos()
         {
             ArticuloNegocio negocio = new ArticuloNegocio();
-            listaImagen = negocio.listarImagen();
-            listaArticulos = negocio.listar();
-            dgvArticulos.DataSource = listaArticulos;
-            ocultarColumnas();
+          
+                listaImagen = negocio.listarImagen();
+                listaArticulos = negocio.listar();
+                dgvArticulos.DataSource = listaArticulos;
+                ocultarColumnas();
 
-            int idArticulo = listaArticulos[0].Id;
+                int idArticulo = 0;
+                if (listaArticulos.Count > 0) idArticulo = listaArticulos[0].Id;
 
-            cargarImagen(traeUrlImagen(idArticulo), idArticulo);
-            posicionImagen(idArticulo);
+                cargarImagen(traeUrlImagen(idArticulo), idArticulo);
+                posicionImagen(idArticulo);
+
+            
         }
 
         private void dgvArticulos_SelectionChanged(object sender, EventArgs e)
@@ -85,8 +89,8 @@ namespace WindowsFormsApp
             }
             else
             {
-                txtAtras.Enabled = false;
-                txtSiguiente.Enabled = false;
+                btnAtras.Enabled = false;
+                btnSiguiente.Enabled = false;
             }
 
             return urlImg;
@@ -94,20 +98,22 @@ namespace WindowsFormsApp
         public int posicionImagen(int idArticulo)
         {
             int posicion = 0;
-
-            if (EsPrimerImagen(idArticulo)) txtAtras.Enabled = false;
-            else txtAtras.Enabled = true;
-
-            if (EsUltimaImagen(idArticulo)) txtSiguiente.Enabled = false;
-            else txtSiguiente.Enabled = true;
-
-            if (!txtAtras.Enabled) return posicion;
-
-            List<Imagen> imagenes = ordenaListaImagenById(idArticulo);
-            foreach (Imagen img in imagenes)
+            if(idArticulo > 0)
             {
-                if (img.ImagenUrl == pbxArticulos.ImageLocation.ToString()) return posicion;
-                posicion++;
+                if (EsPrimerImagen(idArticulo)) btnAtras.Enabled = false;
+                else btnAtras.Enabled = true;
+
+                if (EsUltimaImagen(idArticulo)) btnSiguiente.Enabled = false;
+                else btnSiguiente.Enabled = true;
+
+                if (!btnAtras.Enabled) return posicion;
+
+                List<Imagen> imagenes = ordenaListaImagenById(idArticulo);
+                foreach (Imagen img in imagenes)
+                {
+                    if (img.ImagenUrl == pbxArticulos.ImageLocation.ToString()) return posicion;
+                    posicion++;
+                }
             }
 
             return posicion;
@@ -188,38 +194,7 @@ namespace WindowsFormsApp
 
         private void txtAtras_Click(object sender, EventArgs e)
         {
-            Articulo seleccionado = new Articulo();
 
-            try
-            {
-                seleccionado = (Articulo)dgvArticulos.CurrentRow.DataBoundItem;
-
-                if (listaImagen.Find(x => x.IdArticulo == seleccionado.Id) != null)
-                {
-                    int posicion = posicionImagen(seleccionado.Id);
-
-                    if (posicion > 0)
-                    {// si la posición es > 0 se va a mover hacia atras, entonces habilito el btnSiguiente, si es que está deshabilitado, porque ya no estaría en la última posición.
-                        posicion = posicion - 1;
-                        if (!txtSiguiente.Enabled) txtSiguiente.Enabled = true;
-                    }
-                    if (posicion == 0 && txtAtras.Enabled) txtAtras.Enabled = false;
-
-                    cargarImagen(traeUrlImagen(seleccionado.Id, posicion), seleccionado.Id, true);
-
-                }
-                else //si no tiene imagen valida, desabilito los botones siguiente y anterior
-                {
-                    txtAtras.Enabled = true;
-                    txtSiguiente.Enabled = true;
-                }
-
-            }
-            catch (Exception ex)
-            {
-
-                MessageBox.Show("Ocurrió un error al cargar imagen previa...");
-            }
         }
 
         private void txtSiguiente_Click(object sender, EventArgs e)
@@ -238,9 +213,9 @@ namespace WindowsFormsApp
                     if (posicion < imagenes.Count - 1)
                     {
                         posicion++;
-                        if(!txtAtras.Enabled) txtAtras.Enabled = true;
+                        if(!btnAtras.Enabled) btnAtras.Enabled = true;
                     }
-                    if (posicion == imagenes.Count - 1 && txtSiguiente.Enabled) txtSiguiente.Enabled = false;
+                    if (posicion == imagenes.Count - 1 && btnSiguiente.Enabled) btnSiguiente.Enabled = false;
 
                     cargarImagen(traeUrlImagen(seleccionado.Id, posicion), seleccionado.Id, true);
 
@@ -248,8 +223,107 @@ namespace WindowsFormsApp
                 }
                 else //si no tiene imagen valida, desabilito los botones siguiente y anterior
                 {
-                    txtAtras.Enabled = true;
-                    txtSiguiente.Enabled = true;
+                    btnAtras.Enabled = true;
+                    btnSiguiente.Enabled = true;
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("Ocurrió un error al cargar imagen siguiente...");
+            }
+        }
+
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
+            Articulo articulo = new Articulo();
+
+            try
+            {
+
+                DialogResult respuesta = MessageBox.Show("¿Está seguro que Desea eliminar el artículo?", "Eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (respuesta == DialogResult.Yes)
+                {
+                    articulo = (Articulo)dgvArticulos.CurrentRow.DataBoundItem;
+                    ArticuloNegocio negocio = new ArticuloNegocio();
+
+                    negocio.eliminar(articulo.Id);
+
+                    cargarArticulos();
+                }
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("Ocurrió un error al eliminar...");
+            }
+        }
+
+        private void btnAtras_Click(object sender, EventArgs e)
+        {
+            Articulo seleccionado = new Articulo();
+
+            try
+            {
+                seleccionado = (Articulo)dgvArticulos.CurrentRow.DataBoundItem;
+
+                if (listaImagen.Find(x => x.IdArticulo == seleccionado.Id) != null)
+                {
+                    int posicion = posicionImagen(seleccionado.Id);
+
+                    if (posicion > 0)
+                    {// si la posición es > 0 se va a mover hacia atras, entonces habilito el btnSiguiente, si es que está deshabilitado, porque ya no estaría en la última posición.
+                        posicion = posicion - 1;
+                        if (!btnSiguiente.Enabled) btnSiguiente.Enabled = true;
+                    }
+                    if (posicion == 0 && btnAtras.Enabled) btnAtras.Enabled = false;
+
+                    cargarImagen(traeUrlImagen(seleccionado.Id, posicion), seleccionado.Id, true);
+
+                }
+                else //si no tiene imagen valida, desabilito los botones siguiente y anterior
+                {
+                    btnAtras.Enabled = true;
+                    btnSiguiente.Enabled = true;
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("Ocurrió un error al cargar imagen previa...");
+            }
+        }
+
+        private void btnSiguiente_Click(object sender, EventArgs e)
+        {
+            Articulo seleccionado = new Articulo();
+
+            try
+            {
+                seleccionado = (Articulo)dgvArticulos.CurrentRow.DataBoundItem;
+
+                if (listaImagen.Find(x => x.IdArticulo == seleccionado.Id) != null)
+                {
+                    List<Imagen> imagenes = ordenaListaImagenById(seleccionado.Id);
+                    int posicion = posicionImagen(seleccionado.Id);
+
+                    if (posicion < imagenes.Count - 1)
+                    {
+                        posicion++;
+                        if (!btnAtras.Enabled) btnAtras.Enabled = true;
+                    }
+                    if (posicion == imagenes.Count - 1 && btnSiguiente.Enabled) btnSiguiente.Enabled = false;
+
+                    cargarImagen(traeUrlImagen(seleccionado.Id, posicion), seleccionado.Id, true);
+
+
+                }
+                else //si no tiene imagen valida, desabilito los botones siguiente y anterior
+                {
+                    btnAtras.Enabled = true;
+                    btnSiguiente.Enabled = true;
                 }
 
             }
