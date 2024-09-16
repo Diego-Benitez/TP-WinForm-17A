@@ -40,9 +40,25 @@ namespace WindowsFormsApp
             ArticuloNegocio negocio = new ArticuloNegocio();
             try
             {
-                if(articulo == null)
+                if (string.IsNullOrWhiteSpace(txtNombre.Text))
+                {
+                    MessageBox.Show("Los campos no deben estar vacios.");
+                    return;
+                }
+
+                try
+                {
+                    decimal precio = decimal.Parse(txtPrecio.Text);
+                    articulo.Precio = precio;
+                }
+                catch (FormatException)
+                {
+                    MessageBox.Show("El campo Precio solo acepta numeros");
+                    return;
+                }
+
+                if (articulo == null)
                     articulo = new Articulo();
-                //articulo.Imagenes = new Imagen();
 
                 articulo.Codigo = txtCodigo.Text;
                 articulo.Nombre = txtNombre.Text;
