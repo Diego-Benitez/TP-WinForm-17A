@@ -84,7 +84,7 @@ namespace WindowsFormsApp
                 MessageBox.Show(ex.ToString());
             }
         }
-        private void cargarImagen(string imagen)
+        public void cargarImagen(string imagen)
         {
             try
             {

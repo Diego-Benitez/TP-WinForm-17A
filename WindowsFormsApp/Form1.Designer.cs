@@ -191,6 +191,7 @@
             this.btnEliminarImg.TabIndex = 4;
             this.btnEliminarImg.Text = "Eliminar";
             this.btnEliminarImg.UseVisualStyleBackColor = true;
+            this.btnEliminarImg.Click += new System.EventHandler(this.btnEliminarImg_Click);
             // 
             // btnModificarImg
             // 
@@ -200,6 +201,7 @@
             this.btnModificarImg.TabIndex = 3;
             this.btnModificarImg.Text = "Modificar";
             this.btnModificarImg.UseVisualStyleBackColor = true;
+            this.btnModificarImg.Click += new System.EventHandler(this.btnModificarImg_Click);
             // 
             // btnAgregarImg
             // 

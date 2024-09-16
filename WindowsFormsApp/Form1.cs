@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using dominio;
 using negocio;
+using WindowsFormsApp.negocio;
 
 namespace WindowsFormsApp
 
@@ -184,12 +185,19 @@ namespace WindowsFormsApp
 
         private void btnModificar_Click(object sender, EventArgs e)
         {
-            Articulo seleccionado;
-            seleccionado = (Articulo)dgvArticulos.CurrentRow.DataBoundItem;
+            if (dgvArticulos.CurrentRow != null)
+            {
+                Articulo seleccionado;
+                seleccionado = (Articulo)dgvArticulos.CurrentRow.DataBoundItem;
 
-            frmAltaArticulo modificar = new frmAltaArticulo(seleccionado);
-            modificar.ShowDialog();
-            cargarArticulos();
+                frmAltaArticulo modificar = new frmAltaArticulo(seleccionado);
+                modificar.ShowDialog();
+                cargarArticulos();
+            }
+            else
+            {
+                MessageBox.Show("Debe seleccionar un artículo para modificar");
+            }
         }
 
         private void txtAtras_Click(object sender, EventArgs e)
@@ -241,6 +249,11 @@ namespace WindowsFormsApp
 
             try
             {
+                if (dgvArticulos.CurrentRow == null)
+                {
+                    MessageBox.Show("No hay ningún artículo seleccionado para eliminar.");
+                    return;
+                }
 
                 DialogResult respuesta = MessageBox.Show("¿Está seguro que Desea eliminar el artículo?", "Eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (respuesta == DialogResult.Yes)
@@ -337,6 +350,49 @@ namespace WindowsFormsApp
         private void btnAgregarImg_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnModificarImg_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnEliminarImg_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (dgvArticulos.CurrentRow == null)
+                {
+                    MessageBox.Show("No hay ningún artículo seleccionado para eliminar su imágen.");
+                    return;
+                }
+                if (pbxArticulos.ImageLocation.ToString() == "https://imgs.search.brave.com/fVrzTsY8XbfClD6SD9ps0BmYFUEi7I2qsepvPy4Ypj4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzA3LzU2LzY3LzM0/LzM2MF9GXzc1NjY3/MzQ2Nl9RclpHNU45/bDM4TGw4cE1NQW5J/NzgwWWxQcVROMm5h/aC5qcGc")
+                {
+                    MessageBox.Show("El artículo seleccionado no posee imágen.");
+                    return;
+                }
+
+                DialogResult respuesta = MessageBox.Show("¿Está seguro que Desea eliminar la imágen?", "Eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (respuesta == DialogResult.Yes)
+                {
+                    Articulo articulo = new Articulo();
+                    ImagenNegocio negocio = new ImagenNegocio();
+                    
+                    articulo = (Articulo)dgvArticulos.CurrentRow.DataBoundItem;
+                    List<Imagen> imagenes = ordenaListaImagenById(articulo.Id);
+
+                    int posicion = posicionImagen(articulo.Id);
+
+                    negocio.eliminar(imagenes[posicion].Id);
+                    cargarArticulos();
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("ocurrió un error al eliminar la imágen..");
+            }
         }
     }
 }
