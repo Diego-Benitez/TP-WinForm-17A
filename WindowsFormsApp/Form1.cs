@@ -354,7 +354,31 @@ namespace WindowsFormsApp
 
         private void btnModificarImg_Click(object sender, EventArgs e)
         {
+            if (dgvArticulos.CurrentRow == null)
+            {
+                MessageBox.Show("Debe seleccionar un artículo para modificar la imágen");
+                return;
+            }
+            
+            Imagen img = new Imagen();
+            Articulo seleccionado;
+            seleccionado = (Articulo)dgvArticulos.CurrentRow.DataBoundItem;
 
+            List<Imagen> imagenes = ordenaListaImagenById(seleccionado.Id);
+
+            if (imagenes.Count == 0)
+            {
+                MessageBox.Show("El artículo seleccionado no posee imágen para modificar.");
+                return;
+            }
+
+            int posicion = posicionImagen(seleccionado.Id);
+
+            //if(posicion == 0 && )
+            frmAltaImagen modificar = new frmAltaImagen(imagenes[posicion]);
+
+            modificar.ShowDialog();
+            cargarArticulos();
         }
 
         private void btnEliminarImg_Click(object sender, EventArgs e)
@@ -364,11 +388,6 @@ namespace WindowsFormsApp
                 if (dgvArticulos.CurrentRow == null)
                 {
                     MessageBox.Show("No hay ningún artículo seleccionado para eliminar su imágen.");
-                    return;
-                }
-                if (pbxArticulos.ImageLocation.ToString() == "https://imgs.search.brave.com/fVrzTsY8XbfClD6SD9ps0BmYFUEi7I2qsepvPy4Ypj4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzA3LzU2LzY3LzM0/LzM2MF9GXzc1NjY3/MzQ2Nl9RclpHNU45/bDM4TGw4cE1NQW5J/NzgwWWxQcVROMm5h/aC5qcGc")
-                {
-                    MessageBox.Show("El artículo seleccionado no posee imágen.");
                     return;
                 }
 
@@ -381,7 +400,13 @@ namespace WindowsFormsApp
                     articulo = (Articulo)dgvArticulos.CurrentRow.DataBoundItem;
                     List<Imagen> imagenes = ordenaListaImagenById(articulo.Id);
 
+                    if (imagenes.Count == 0)
+                    {
+                        MessageBox.Show("El artículo seleccionado no posee imágen.");
+                        return;
+                    }
                     int posicion = posicionImagen(articulo.Id);
+
 
                     negocio.eliminar(imagenes[posicion].Id);
                     cargarArticulos();

@@ -29,7 +29,6 @@ namespace WindowsFormsApp
         }
         private void frmAltaImagen_Load(object sender, EventArgs e)
         {
-            frmAltaArticulo altaArt = new frmAltaArticulo();
 
             string url = "";
 
@@ -40,9 +39,22 @@ namespace WindowsFormsApp
                 url = imagen.ImagenUrl;
             }
 
-            altaArt.cargarImagen(url);
+            cargarImagen(url);
         }
+        public void cargarImagen(string imagen)
+        {
+            try
+            {
+                pbxImagen.Load(imagen);
 
+            }
+            catch (Exception)
+            {
+
+                pbxImagen.Load("https://imgs.search.brave.com/fVrzTsY8XbfClD6SD9ps0BmYFUEi7I2qsepvPy4Ypj4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzA3LzU2LzY3LzM0/LzM2MF9GXzc1NjY3/MzQ2Nl9RclpHNU45/bDM4TGw4cE1NQW5J/NzgwWWxQcVROMm5h/aC5qcGc");
+
+            }
+        }
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             Close();
@@ -60,8 +72,10 @@ namespace WindowsFormsApp
             {
                 ImagenNegocio negocio = new ImagenNegocio();    
                 if(imagen == null) imagen = new Imagen();
-
-                if(imagen.Id != 0)//modifico
+                
+                imagen.ImagenUrl = txtImagen.Text;
+                
+                if (imagen.Id != 0)//modifico
                 {
                     negocio.modificar(imagen);
                     MessageBox.Show("Modificado Exitosamente!");
@@ -77,12 +91,12 @@ namespace WindowsFormsApp
 
                 MessageBox.Show("ocurrió un error al agregar");
             }
+            Close();
         }
 
         private void btnVer_Click(object sender, EventArgs e)
         {
-            frmAltaArticulo altaArt = new frmAltaArticulo();
-            altaArt.cargarImagen(txtImagen.Text);
+            cargarImagen(txtImagen.Text);
         }
     }
 }
