@@ -16,10 +16,12 @@ namespace WindowsFormsApp
     public partial class frmAltaImagen : Form
     {
         private Imagen imagen = null;
-        public frmAltaImagen()
+        private int idArticulo = 0;
+        public frmAltaImagen(int idArticulo)
         {
             InitializeComponent();
             Text = "Agregar Imágen";
+            this.idArticulo = idArticulo;
         }
         public frmAltaImagen(Imagen img)
         {
@@ -70,8 +72,12 @@ namespace WindowsFormsApp
 
             try
             {
-                ImagenNegocio negocio = new ImagenNegocio();    
-                if(imagen == null) imagen = new Imagen();
+                ImagenNegocio negocio = new ImagenNegocio();
+                if (imagen == null)
+                {
+                    imagen = new Imagen();
+                    imagen.IdArticulo = idArticulo;
+                }
                 
                 imagen.ImagenUrl = txtImagen.Text;
                 

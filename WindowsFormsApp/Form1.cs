@@ -349,7 +349,19 @@ namespace WindowsFormsApp
 
         private void btnAgregarImg_Click(object sender, EventArgs e)
         {
+            if (dgvArticulos.CurrentRow == null)
+            {
+                MessageBox.Show("Debe seleccionar un artículo para agregarle imágen");
+                return;
+            }
+           
+            Articulo seleccionado;
+            seleccionado = (Articulo)dgvArticulos.CurrentRow.DataBoundItem;
 
+            frmAltaImagen agregar = new frmAltaImagen(seleccionado.Id);
+
+            agregar.ShowDialog();
+            cargarArticulos();
         }
 
         private void btnModificarImg_Click(object sender, EventArgs e)
